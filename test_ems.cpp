@@ -1,4 +1,4 @@
-/*
+
 #include <gtest/gtest.h>
 
 extern "C"
@@ -351,4 +351,3 @@ int main(int argc,char **argv)
 
     return RUN_ALL_TESTS();
 }
-*/
