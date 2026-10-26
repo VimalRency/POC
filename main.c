@@ -21,7 +21,7 @@ int main()
     int choice;
     int id;
 
-    loadEmployees(&head);
+  
 
     do
     {
