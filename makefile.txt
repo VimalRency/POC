@@ -1,0 +1,427 @@
+
+ 
+
+# Employee Management System 
+
+ 
+
+ 
+
+CC = gcc 
+
+ 
+
+ 
+
+CFLAGS = -Wall -Wextra -Wpedantic -std=c11 
+
+ 
+
+ 
+
+COVERAGE_FLAGS = -fprofile-arcs -ftest-coverage 
+
+ 
+
+ 
+
+SRC = main.c \ 
+
+ 
+
+employee.c \ 
+
+ 
+
+attendance.c \ 
+
+ 
+
+payroll.c \ 
+
+ 
+
+validation.c 
+
+ 
+
+ 
+
+HEADERS = employee.h \ 
+
+ 
+
+attendance.h \ 
+
+ 
+
+payroll.h \ 
+
+ 
+
+validation.h 
+
+ 
+
+ 
+
+TARGET = ems 
+
+ 
+
+ 
+
+TEST_SOURCES = \ 
+
+ 
+
+test_runner.c \ 
+
+ 
+
+test_validation.c \ 
+
+ 
+
+test_employee.c \ 
+
+ 
+
+test_attendance.c \ 
+
+ 
+
+test_payroll.c \ 
+
+ 
+
+test_integration.c 
+
+ 
+
+ 
+
+TEST_TARGET = test_ems 
+
+ 
+
+ 
+
+.PHONY: all test coverage cppcheck valgrind clean 
+
+ 
+
+ 
+
+# ========================================== 
+
+ 
+
+# Main Build 
+
+ 
+
+# ========================================== 
+
+ 
+
+ 
+
+all: $(TARGET) 
+
+ 
+
+ 
+
+$(TARGET): $(SRC) $(HEADERS) 
+
+ 
+
+$(CC) $(CFLAGS) $(SRC) -o $(TARGET) 
+
+ 
+
+ 
+
+# ========================================== 
+
+ 
+
+# Unit Testing 
+
+ 
+
+# ========================================== 
+
+ 
+
+ 
+
+test: $(TEST_TARGET) 
+
+ 
+
+ 
+
+$(TEST_TARGET): $(TEST_SOURCES) \ 
+
+ 
+
+employee.c \ 
+
+ 
+
+attendance.c \ 
+
+ 
+
+payroll.c \ 
+
+ 
+
+validation.c 
+
+ 
+
+$(CC) $(CFLAGS) \ 
+
+ 
+
+$(TEST_SOURCES) \ 
+
+ 
+
+employee.c \ 
+
+ 
+
+attendance.c \ 
+
+ 
+
+payroll.c \ 
+
+ 
+
+validation.c \ 
+
+ 
+
+-o $(TEST_TARGET) 
+
+ 
+
+ 
+
+runtest: test 
+
+ 
+
+./$(TEST_TARGET) 
+
+ 
+
+ 
+
+# ========================================== 
+
+ 
+
+# Code Coverage 
+
+ 
+
+# ========================================== 
+
+ 
+
+ 
+
+coverage: 
+
+ 
+
+$(CC) $(CFLAGS) \ 
+
+ 
+
+$(COVERAGE_FLAGS) \ 
+
+ 
+
+$(TEST_SOURCES) \ 
+
+ 
+
+employee.c \ 
+
+ 
+
+attendance.c \ 
+
+ 
+
+payroll.c \ 
+
+ 
+
+validation.c \ 
+
+ 
+
+-o $(TEST_TARGET) 
+
+ 
+
+ 
+
+./$(TEST_TARGET) 
+
+ 
+
+ 
+
+gcov employee.c 
+
+ 
+
+gcov attendance.c 
+
+ 
+
+gcov payroll.c 
+
+ 
+
+gcov validation.c 
+
+ 
+
+ 
+
+# ========================================== 
+
+ 
+
+# Static Analysis 
+
+ 
+
+# ========================================== 
+
+ 
+
+ 
+
+cppcheck: 
+
+ 
+
+cppcheck \ 
+
+ 
+
+--enable=all \ 
+
+ 
+
+--std=c11 \ 
+
+ 
+
+--inconclusive \ 
+
+ 
+
+--force \ 
+
+ 
+
+*.c 
+
+ 
+
+ 
+
+# ========================================== 
+
+ 
+
+# Memory Leak Detection 
+
+ 
+
+# ========================================== 
+
+ 
+
+ 
+
+valgrind: 
+
+ 
+
+valgrind \ 
+
+ 
+
+--leak-check=full \ 
+
+ 
+
+--show-leak-kinds=all \ 
+
+ 
+
+--track-origins=yes \ 
+
+ 
+
+./$(TARGET) 
+
+ 
+
+ 
+
+# ========================================== 
+
+ 
+
+# Clean 
+
+ 
+
+# ========================================== 
+
+ 
+
+ 
+
+clean: 
+
+ 
+
+rm -f $(TARGET) 
+
+ 
+
+rm -f $(TEST_TARGET) 
+
+ 
+
+rm -f *.gcno 
+
+ 
+
+rm -f *.gcda 
+
+ 
+
+rm -f *.gcov 
+
+ 
+
+rm -f *.dat 
+
+ 
+
