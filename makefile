@@ -1,16 +1,11 @@
 
 
-=========================================
-Employee Management System
-=========================================
 CC = gcc
+CXX = g++
 CFLAGS = -Wall -Wextra -std=c11
-COVFLAGS = -fprofile-arcs -ftest-coverage
+CXXFLAGS = -Wall -Wextra -std=c++17
 TARGET = ems
-TEST_TARGET = ems_tests
-=========================================
-Main Application Sources
-=========================================
+GTEST_TARGET = gtest_ems
 SRC = \
 main.c \
 employee.c \
@@ -19,102 +14,58 @@ payroll.c \
 validation.c \
 login.c \
 logger.c
-HEADERS = \
-employee.h \
-attendance.h \
-payroll.h \
-validation.h \
-login.h \
-logger.h
-=========================================
-Unit Testing
-=========================================
 TEST_SRC = \
-test_runner.c \
-test_validation.c \
-test_employee.c \
-test_attendance.c \
-test_payroll.c \
-test_integration.c \
-employee.c \
-attendance.c \
-payroll.c \
-validation.c
-=========================================
-Targets
-=========================================
-.PHONY: all build run test coverage cppcheck valgrind clean
-all: build
-=========================================
-Build EMS
-=========================================
-build:
-$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
-=========================================
-Run EMS
-=========================================
-run: build
-./$(TARGET)
-=========================================
-Build Test Executable
-=========================================
-test:
-$(CC) $(CFLAGS) $(TEST_SRC) -o $(TEST_TARGET)
-=========================================
-Run Unit Tests
-=========================================
-runtest: test
-./$(TEST_TARGET)
-=========================================
-Code Coverage
-=========================================
-coverage:
-$(CC) $(CFLAGS) $(COVFLAGS) \
-test_runner.c \
-test_validation.c \
-test_employee.c \
-test_attendance.c \
-test_payroll.c \
-test_integration.c \
+test_ems.cpp \
 employee.c \
 attendance.c \
 payroll.c \
 validation.c \
--o $(TEST_TARGET)
-./$(TEST_TARGET)
+login.c \
+logger.c
+all:
+$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
+run:
+./$(TARGET)
+gtest:
+$(CXX) \
+$(CXXFLAGS) \
+$(TEST_SRC) \
+-lgtest \
+-lgtest_main \
+-pthread \
+-o $(GTEST_TARGET)
+rungtest:
+./$(GTEST_TARGET)
+coverage:
+$(CXX) \
+$(CXXFLAGS) \
+-fprofile-arcs \
+-ftest-coverage \
+$(TEST_SRC) \
+-lgtest \
+-lgtest_main \
+-pthread \
+-o $(GTEST_TARGET)
+./$(GTEST_TARGET)
 gcov employee.c
 gcov attendance.c
 gcov payroll.c
 gcov validation.c
-=========================================
-Static Analysis
-=========================================
 cppcheck:
 cppcheck \
 --enable=all \
 --inconclusive \
---std=c11 \
 --force \
-.c
-=========================================
-Memory Check
-=========================================
-valgrind: build
+.c .h
+valgrind:
 valgrind \
 --leak-check=full \
 --show-leak-kinds=all \
 --track-origins=yes \
 ./$(TARGET)
-=========================================
-Cleanup
-=========================================
 clean:
 rm -f $(TARGET)
-rm -f $(TEST_TARGET)
+rm -f $(GTEST_TARGET)
+rm -f .gcov
 rm -f .gcda
 rm -f .gcno
-rm -f .gcov
-rm -f employees.dat
-rm -f attendance.dat
-rm -f payroll.dat
-rm -f auditlog.dat
