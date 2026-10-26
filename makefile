@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Wpedantic -std=c11
 COVERAGE_FLAGS = -fprofile-arcs -ftest-coverage
 
-SRC = main.c employee.c attendance.c payroll.c validation.c
+SRC = main.c employee.c attendance.c payroll.c validation.c login.c logger.c
 HEADERS = employee.h attendance.h payroll.h validation.h
 TARGET = ems
 
