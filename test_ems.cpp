@@ -11,7 +11,7 @@ extern "C"
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
-/* ============================================
+============================================
 VALIDATION TESTS
 ============================================ /
 TEST(ValidationTest, EmployeeId1000)
@@ -77,9 +77,9 @@ TEST(ValidationTest, InvalidAttendance)
 EXPECT_EQ(0,
 validateAttendanceStatus('X'));
 }
-/* ============================================
+ ============================================
 EMPLOYEE TESTS
-============================================ /
+============================================ 
 TEST(EmployeeTest, SearchFound)
 {
 EmployeeNode node;
@@ -126,7 +126,7 @@ strcpy(emp.dept.deptName,
 EXPECT_STREQ("Finance",
 emp.dept.deptName);
 }
-/* ============================================
+============================================
 ATTENDANCE TESTS
 ============================================ /
 TEST(AttendanceTest, AttendanceStructure)
@@ -166,7 +166,7 @@ EXPECT_STREQ(
 "21-11-2026",
 att.date);
 }
-/* ============================================
+============================================
 PAYROLL TESTS
 ============================================ /
 TEST(PayrollTest, DailySalaryCalculation)
@@ -220,7 +220,7 @@ p.empId = 1000;
 EXPECT_EQ(1000,
 p.empId);
 }
-/* ============================================
+============================================
 INTEGRATION TESTS
 ============================================ /
 TEST(IntegrationTest,
@@ -273,7 +273,7 @@ att.empId);
 EXPECT_EQ(pay.basicSalary,
 emp.salary);
 }
-/* ============================================
+ ============================================
 MAIN
 ============================================ /
 int main(int argc,
