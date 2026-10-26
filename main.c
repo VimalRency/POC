@@ -1,4 +1,4 @@
-/*
+
 #include<stdio.h>
 
 #include "employee.h"
@@ -145,4 +145,3 @@ int main()
 
     return 0;
 }
-*/
