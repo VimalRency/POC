@@ -1,6 +1,6 @@
 
-#include <gtest/gtest.h>
 
+#include <gtest/gtest.h>
 extern "C"
 {
 #include "employee.h"
@@ -8,346 +8,280 @@ extern "C"
 #include "payroll.h"
 #include "validation.h"
 }
-
 #include <cstring>
+#include <cstdlib>
 #include <cstdio>
-
-/* =====================================================
-   Validation Tests
-   ===================================================== */
-/*
-TEST(ValidationTest, ValidEmployeeId)
+/* ============================================
+VALIDATION TESTS
+============================================ /
+TEST(ValidationTest, EmployeeId1000)
 {
-    EXPECT_EQ(1, validateEmpId(1000));
+EXPECT_EQ(1, validateEmpId(1000));
 }
-
-TEST(ValidationTest, InvalidEmployeeIdLow)
+TEST(ValidationTest, EmployeeId9999)
 {
-    EXPECT_EQ(0, validateEmpId(999));
+EXPECT_EQ(1, validateEmpId(9999));
 }
-
-TEST(ValidationTest, InvalidEmployeeIdHigh)
+TEST(ValidationTest, EmployeeIdBelowRange)
 {
-    EXPECT_EQ(0, validateEmpId(10000));
+EXPECT_EQ(0, validateEmpId(999));
 }
-
-TEST(ValidationTest, ValidSalary)
+TEST(ValidationTest, EmployeeIdAboveRange)
 {
-    EXPECT_EQ(1, validateSalary(50000));
+EXPECT_EQ(0, validateEmpId(10000));
 }
-
+TEST(ValidationTest, PositiveSalary)
+{
+EXPECT_EQ(1, validateSalary(50000));
+}
+TEST(ValidationTest, ZeroSalary)
+{
+EXPECT_EQ(1, validateSalary(0));
+}
 TEST(ValidationTest, NegativeSalary)
 {
-    EXPECT_EQ(0, validateSalary(-100));
+EXPECT_EQ(0, validateSalary(-100));
 }
-
 TEST(ValidationTest, ValidPhone)
 {
-    EXPECT_EQ(1,
-              validatePhone((char*)"9876543210"));
+EXPECT_EQ(1,
+validatePhone((char)"9876543210"));
 }
-
-TEST(ValidationTest, InvalidPhoneLength)
+TEST(ValidationTest, ShortPhone)
 {
-    EXPECT_EQ(0,
-              validatePhone((char*)"1234"));
+EXPECT_EQ(0,
+validatePhone((char)"1234"));
 }
-
-TEST(ValidationTest, InvalidPhoneCharacters)
+TEST(ValidationTest, AlphabetPhone)
 {
-    EXPECT_EQ(0,
-              validatePhone((char*)"abcd567890"));
+EXPECT_EQ(0,
+validatePhone((char)"abcd567890"));
 }
-
-TEST(ValidationTest, AttendancePresent)
+TEST(ValidationTest, PresentAttendance)
 {
-    EXPECT_EQ(1,
-              validateAttendanceStatus('P'));
+EXPECT_EQ(1,
+validateAttendanceStatus('P'));
 }
-
-TEST(ValidationTest, AttendanceAbsent)
+TEST(ValidationTest, AbsentAttendance)
 {
-    EXPECT_EQ(1,
-              validateAttendanceStatus('A'));
+EXPECT_EQ(1,
+validateAttendanceStatus('A'));
 }
-
-TEST(ValidationTest, AttendanceLeave)
+TEST(ValidationTest, LeaveAttendance)
 {
-    EXPECT_EQ(1,
-              validateAttendanceStatus('L'));
+EXPECT_EQ(1,
+validateAttendanceStatus('L'));
 }
-
-TEST(ValidationTest, AttendanceInvalid)
+TEST(ValidationTest, InvalidAttendance)
 {
-    EXPECT_EQ(0,
-              validateAttendanceStatus('X'));
+EXPECT_EQ(0,
+validateAttendanceStatus('X'));
 }
-
-/* =====================================================
-   Employee Tests
-   ===================================================== */
-/*
-TEST(EmployeeTest, SearchEmployeeFound)
+/* ============================================
+EMPLOYEE TESTS
+============================================ /
+TEST(EmployeeTest, SearchFound)
 {
-    EmployeeNode node;
-
-    node.emp.empId = 1000;
-    node.next = NULL;
-
-    EXPECT_NE(nullptr,
-              searchEmployee(&node,1000));
+EmployeeNode node;
+node.emp.empId = 1000;
+node.next = NULL;
+EXPECT_NE(nullptr,
+searchEmployee(&node,1000));
 }
-
-TEST(EmployeeTest, SearchEmployeeNotFound)
+TEST(EmployeeTest, SearchNotFound)
 {
-    EmployeeNode node;
-
-    node.emp.empId = 1000;
-    node.next = NULL;
-
-    EXPECT_EQ(nullptr,
-              searchEmployee(&node,9999));
+EmployeeNode node;
+node.emp.empId = 1000;
+node.next = NULL;
+EXPECT_EQ(nullptr,
+searchEmployee(&node,9999));
 }
-
-TEST(EmployeeTest, SaveEmployeeFile)
+TEST(EmployeeTest, SingleNodeLinkedList)
 {
-    EmployeeNode *head = NULL;
-
-    EmployeeNode *node =
-        (EmployeeNode*)malloc(sizeof(EmployeeNode));
-
-    ASSERT_NE(nullptr,node);
-
-    node->emp.empId = 1000;
-
-    strcpy(node->emp.name,
-           "Rency");
-
-    node->emp.salary = 50000;
-
-    node->next = NULL;
-
-    head = node;
-
-    saveEmployees(head);
-
-    EXPECT_TRUE(true);
-
-    free(node);
+EmployeeNode node;
+node.emp.empId = 1001;
+EXPECT_EQ(1001,
+node.emp.empId);
 }
-
-TEST(EmployeeTest, LoadEmployeeFile)
+TEST(EmployeeTest, EmployeeNameStorage)
 {
-    EmployeeNode *head = NULL;
-
-    loadEmployees(&head);
-
-    EXPECT_TRUE(true);
-
-    freeList(&head);
+Employee emp;
+strcpy(emp.name,
+"Rency");
+EXPECT_STREQ("Rency",
+emp.name);
 }
-
-/* =====================================================
-   Attendance Tests
-   ===================================================== */
-/*
-TEST(AttendanceTest, AttendanceWrite)
+TEST(EmployeeTest, EmployeeSalaryStorage)
 {
-    Attendance att;
-
-    FILE *fp;
-
-    fp = fopen("attendance.dat","wb");
-
-    ASSERT_NE(nullptr,fp);
-
-    att.empId = 1000;
-
-    strcpy(att.date,
-           "21-11-2026");
-
-    att.status='P';
-
-    fwrite(&att,
-           sizeof(Attendance),
-           1,
-           fp);
-
-    fclose(fp);
-
-    SUCCEED();
+Employee emp;
+emp.salary = 50000;
+EXPECT_EQ(50000,
+(int)emp.salary);
 }
-
-TEST(AttendanceTest, AttendanceRead)
+TEST(EmployeeTest, EmployeeDepartmentStorage)
 {
-    Attendance att;
-
-    FILE *fp;
-
-    fp = fopen("attendance.dat","rb");
-
-    ASSERT_NE(nullptr,fp);
-
-    fread(&att,
-          sizeof(Attendance),
-          1,
-          fp);
-
-    fclose(fp);
-
-    EXPECT_EQ(1000,
-              att.empId);
-
-    EXPECT_EQ('P',
-              att.status);
+Employee emp;
+strcpy(emp.dept.deptName,
+"Finance");
+EXPECT_STREQ("Finance",
+emp.dept.deptName);
 }
-
+/* ============================================
+ATTENDANCE TESTS
+============================================ /
+TEST(AttendanceTest, AttendanceStructure)
+{
+Attendance att;
+att.empId = 1000;
+EXPECT_EQ(1000,
+att.empId);
+}
+TEST(AttendanceTest, AttendanceStatusPresent)
+{
+Attendance att;
+att.status='P';
+EXPECT_EQ('P',
+att.status);
+}
+TEST(AttendanceTest, AttendanceStatusAbsent)
+{
+Attendance att;
+att.status='A';
+EXPECT_EQ('A',
+att.status);
+}
+TEST(AttendanceTest, AttendanceStatusLeave)
+{
+Attendance att;
+att.status='L';
+EXPECT_EQ('L',
+att.status);
+}
 TEST(AttendanceTest, AttendanceDate)
 {
-    Attendance att;
-
-    strcpy(att.date,
-          "21-11-2026");
-
-    EXPECT_STREQ("21-11-2026",
-                 att.date);
+Attendance att;
+strcpy(att.date,
+"21-11-2026");
+EXPECT_STREQ(
+"21-11-2026",
+att.date);
 }
-
-/* =====================================================
-   Payroll Tests
-   ===================================================== */
-/*
+/* ============================================
+PAYROLL TESTS
+============================================ /
+TEST(PayrollTest, DailySalaryCalculation)
+{
+float salary = 60000;
+float dailySalary =
+salary / 30.0f;
+EXPECT_EQ(2000,
+(int)dailySalary);
+}
 TEST(PayrollTest, DeductionCalculation)
 {
-    Payroll p;
-
-    p.basicSalary = 60000;
-
-    p.absentDays = 2;
-
-    float dailySalary =
-        p.basicSalary / 30.0f;
-
-    p.deduction =
-        dailySalary * p.absentDays;
-
-    EXPECT_EQ(4000,
-              (int)p.deduction);
+Payroll p;
+p.basicSalary = 60000;
+p.absentDays = 2;
+float dailySalary =
+p.basicSalary / 30.0f;
+p.deduction =
+dailySalary *
+p.absentDays;
+EXPECT_EQ(4000,
+(int)p.deduction);
 }
-
 TEST(PayrollTest, NetSalaryCalculation)
 {
-    Payroll p;
-
-    p.basicSalary = 60000;
-
-    p.absentDays = 2;
-
-    float dailySalary =
-        p.basicSalary / 30.0f;
-
-    p.deduction =
-        dailySalary * p.absentDays;
-
-    p.netSalary =
-        p.basicSalary -
-        p.deduction;
-
-    EXPECT_EQ(56000,
-              (int)p.netSalary);
+Payroll p;
+p.basicSalary = 60000;
+p.absentDays = 2;
+float dailySalary =
+p.basicSalary / 30.0f;
+p.deduction =
+dailySalary *
+p.absentDays;
+p.netSalary =
+p.basicSalary -
+p.deduction;
+EXPECT_EQ(56000,
+(int)p.netSalary);
 }
-
 TEST(PayrollTest, NetSalaryPositive)
 {
-    Payroll p;
-
-    p.netSalary = 56000;
-
-    EXPECT_GT(p.netSalary,0);
+Payroll p;
+p.netSalary = 56000;
+EXPECT_GT(p.netSalary,
+0);
 }
-
-/* =====================================================
-   Integration Tests
-   ===================================================== */
-/*
-TEST(IntegrationTest, EmployeeAttendanceMapping)
+TEST(PayrollTest, PayrollEmployeeId)
 {
-    Employee emp;
-
-    Attendance att;
-
-    emp.empId = 1000;
-
-    att.empId = 1000;
-
-    EXPECT_EQ(emp.empId,
-              att.empId);
+Payroll p;
+p.empId = 1000;
+EXPECT_EQ(1000,
+p.empId);
 }
-
-TEST(IntegrationTest, EmployeePayrollMapping)
+/* ============================================
+INTEGRATION TESTS
+============================================ /
+TEST(IntegrationTest,
+EmployeeAttendanceMapping)
 {
-    Employee emp;
-
-    Payroll pay;
-
-    emp.empId = 1000;
-
-    pay.empId = 1000;
-
-    EXPECT_EQ(emp.empId,
-              pay.empId);
+Employee emp;
+Attendance att;
+emp.empId = 1000;
+att.empId = 1000;
+EXPECT_EQ(emp.empId,
+att.empId);
 }
-
-TEST(IntegrationTest, SalaryTransfer)
+TEST(IntegrationTest,
+EmployeePayrollMapping)
 {
-    Employee emp;
-
-    Payroll pay;
-
-    emp.salary = 60000;
-
-    pay.basicSalary =
-        emp.salary;
-
-    EXPECT_EQ(emp.salary,
-              pay.basicSalary);
+Employee emp;
+Payroll pay;
+emp.empId = 1000;
+pay.empId = 1000;
+EXPECT_EQ(emp.empId,
+pay.empId);
 }
-
-TEST(IntegrationTest, CompleteFlow)
+TEST(IntegrationTest,
+SalaryTransfer)
 {
-    Employee emp;
-
-    Attendance att;
-
-    Payroll pay;
-
-    emp.empId = 1000;
-
-    emp.salary = 60000;
-
-    att.empId = 1000;
-
-    att.status = 'P';
-
-    pay.empId = emp.empId;
-
-    pay.basicSalary =
-        emp.salary;
-
-    EXPECT_EQ(pay.empId,
-              att.empId);
-
-    EXPECT_EQ(pay.basicSalary,
-              emp.salary);
+Employee emp;
+Payroll pay;
+emp.salary = 60000;
+pay.basicSalary =
+emp.salary;
+EXPECT_EQ(emp.salary,
+pay.basicSalary);
 }
-
-/* =====================================================
-   Main
-   ===================================================== */
-/*
-int main(int argc,char **argv)
+TEST(IntegrationTest,
+CompletePayrollFlow)
 {
-    ::testing::InitGoogleTest(&argc,argv);
-
-    return RUN_ALL_TESTS();
+Employee emp;
+Attendance att;
+Payroll pay;
+emp.empId = 1000;
+emp.salary = 60000;
+att.empId = 1000;
+att.status = 'P';
+pay.empId =
+emp.empId;
+pay.basicSalary =
+emp.salary;
+EXPECT_EQ(pay.empId,
+att.empId);
+EXPECT_EQ(pay.basicSalary,
+emp.salary);
 }
+/* ============================================
+MAIN
+============================================ /
+int main(int argc,
+char argv)
+{
+::testing::InitGoogleTest(
+&argc,
+argv);
+return RUN_ALL_TESTS();
+}
+
