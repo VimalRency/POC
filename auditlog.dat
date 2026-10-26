@@ -1,0 +1,33 @@
+void writeLog(char action[])
+{
+    FILE *fp;
+
+    time_t now;
+
+    fp = fopen("auditlog.dat","a");
+
+    if(fp == NULL)
+    {
+        return;
+    }
+
+    now = time(NULL);
+
+    fprintf(fp,
+            "%s : %s",
+            action,
+            ctime(&now));
+
+    fclose(fp);
+}HR Login Success : Mon Oct 26 06:58:02 2026
+Employee Added : Mon Oct 26 06:58:42 2026
+Employee Added : Mon Oct 26 06:59:16 2026
+Employee Updated : Mon Oct 26 06:59:39 2026
+Attendance Recorded : Mon Oct 26 06:59:57 2026
+Attendance Recorded : Mon Oct 26 07:00:05 2026
+Attendance Recorded : Mon Oct 26 07:00:14 2026
+Payroll Generated : Mon Oct 26 07:00:24 2026
+Employee Added : Mon Oct 26 07:02:06 2026
+Attendance Recorded : Mon Oct 26 07:02:16 2026
+Payroll Generated : Mon Oct 26 07:02:32 2026
+Payroll Generated : Mon Oct 26 07:02:41 2026
