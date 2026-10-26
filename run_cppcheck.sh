@@ -14,8 +14,6 @@ echo "================================="
 echo "CPPCHECK COMPLETED"
 echo "================================="
 
-chmod +x run_cppcheck.sh
-./run_cppcheck.sh
 
 
 
