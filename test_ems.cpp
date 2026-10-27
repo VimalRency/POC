@@ -12,7 +12,7 @@ extern "C"
 #include <cstdlib>
 /* ============================================
 VALIDATION TESTS
-============================================ /
+============================================ */
 TEST(ValidationTest, EmployeeId1000)
 {
 EXPECT_EQ(1, validateEmpId(1000));
