@@ -81,7 +81,7 @@ validateAttendanceStatus('X'));
 }
 /* ============================================
 EMPLOYEE TESTS
-============================================ /
+============================================ */
 TEST(EmployeeTest, EmployeeIdStorage)
 {
 Employee emp;
@@ -132,7 +132,7 @@ searchEmployee(&node,
 }
 /* ============================================
 ATTENDANCE TESTS
-============================================ /
+============================================ */
 TEST(AttendanceTest, AttendanceEmployeeId)
 {
 Attendance att;
@@ -171,7 +171,7 @@ att.date);
 }
 /* ============================================
 PAYROLL TESTS
-============================================ /
+============================================ */
 TEST(PayrollTest, BasicSalaryStorage)
 {
 Payroll p;
@@ -224,7 +224,7 @@ EXPECT_GT(p.netSalary,
 }
 /* ============================================
 INTEGRATION TESTS
-============================================ /
+============================================ */
 TEST(IntegrationTest, EmployeeAttendanceMapping)
 {
 Employee emp;
@@ -271,7 +271,7 @@ pay.basicSalary);
 }
 /* ============================================
 MAIN
-============================================ /
+============================================ */
 int main(int argc, char argv)
 {
 ::testing::InitGoogleTest(
