@@ -235,7 +235,7 @@ void loadEmployees(EmployeeNode **head)
     {
         EmployeeNode *node;
 
-        node = malloc(sizeof(EmployeeNode));
+        node =(EmployeeNode *)malloc(sizeof(EmployeeNode));
 
         node->emp = emp;
         node->next = *head;
