@@ -36,6 +36,8 @@ void testIntegration(void)
         emp.salary;
 
     pay.presentDays = 1;
+    EXPECT_EQ(
+        1,pay.presentDays);
 
     EXPECT_TRUE(
         emp.empId ==
