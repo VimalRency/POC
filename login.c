@@ -13,10 +13,10 @@ int hrLogin(void)
     printf("\n================================");
 
     printf("\nUsername : ");
-    scanf("%s", username);
+    scanf("29%s", username);
 
     printf("Password : ");
-    scanf("%s", password);
+    scanf("%29s", password);
 
     if(strcmp(username, "admin") == 0 &&
        strcmp(password, "admin123") == 0)
