@@ -9,6 +9,7 @@
 void recordAttendance()
 {
     Attendance a;
+    memset(&a,0,sizeof(Attendance));
     time_t now;
 
     struct tm *current;
