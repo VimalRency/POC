@@ -36,7 +36,7 @@ coverage:
  -o $(COV_TARGET)
 cppcheck:
  echo "CPPCHECK REPORT - $$(date)" > cppcheck_report.txt
- cppcheck --enable=all --inconclusive --force .c .h 2>>    cppcheck_report.txt
+ cppcheck --enable=all --inconclusive   --suppress=missingIncludeSystem --force .c .h 2>>    cppcheck_report.txt
 valgrind:
  echo "VALGRIND REPORT - $$(date)" > valgrind_report.txt
  valgrind \
