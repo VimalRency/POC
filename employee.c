@@ -51,10 +51,10 @@ void addEmployee(EmployeeNode **head)
     }
 
     printf("Enter Name : ");
-    scanf(" %[^\n]",newNode->emp.name);
+    scanf(" %29s",newNode->emp.name);
 
     printf("Enter Phone(10 digits) : ");
-    scanf("%s",newNode->emp.phone);
+    scanf("%29s",newNode->emp.phone);
 
     if(!validatePhone(newNode->emp.phone))
     {
@@ -67,10 +67,10 @@ void addEmployee(EmployeeNode **head)
     scanf("%d",&newNode->emp.dept.deptId);
 
     printf("Enter Department Name : ");
-    scanf(" %[^\n]",newNode->emp.dept.deptName);
+    scanf(" %29s",newNode->emp.dept.deptName);
 
     printf("Enter Role : ");
-    scanf(" %[^\n]",newNode->emp.role);
+    scanf(" %14s",newNode->emp.role);
 
     printf("Enter Salary : ");
     scanf("%f",&newNode->emp.salary);
