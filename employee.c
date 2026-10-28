@@ -249,7 +249,12 @@ void loadEmployees(EmployeeNode **head)
 
 void freeList(EmployeeNode **head)
 {
-    EmployeeNode *temp;
+    
+    if(head==NULL)
+    { 
+        return;
+    }
+    EmployeeNode *temp= head;
 
     while(*head)
     {
