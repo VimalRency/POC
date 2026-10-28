@@ -32,6 +32,7 @@ void addEmployee(EmployeeNode **head)
         printf("Memory Allocation Failed\n");
         return;
     }
+    memset(newNode,0,sizeof(EmployeeNode));
 
     printf("\nEnter Employee ID : ");
     scanf("%d",&newNode->emp.empId);
