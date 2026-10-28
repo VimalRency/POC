@@ -146,7 +146,7 @@ void updateEmployee(EmployeeNode *head)
     }
 
     printf("Enter New Role : ");
-    scanf(" %[^\n]",emp->emp.role);
+    scanf(" %29s",emp->emp.role);
 
     printf("Enter New Salary : ");
     scanf("%f",&emp->emp.salary);
