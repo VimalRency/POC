@@ -274,6 +274,7 @@ void employeeSummary()
     float totalSalary = 0.0;
 
     fp = fopen("employees.dat","rb");
+    saveEmployees(head);
 
     if(fp == NULL)
     {
