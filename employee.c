@@ -181,7 +181,8 @@ void deleteEmployee(EmployeeNode **head)
             }
 
             free(curr);
-
+            saveEmployees(*head);
+            writeLog("Employee Deleted");
             printf("Employee Deleted\n");
             return;
         }
@@ -189,7 +190,7 @@ void deleteEmployee(EmployeeNode **head)
         prev = curr;
         curr = curr->next;
     }
-    writeLog("Employee Deleted");
+    
 
     printf("Employee Not Found\n");
 }
