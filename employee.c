@@ -256,7 +256,7 @@ void freeList(EmployeeNode **head)
     { 
         return;
     }
-    EmployeeNode *temp= head;
+    EmployeeNode *temp= *head;
 
     while(*head)
     {
