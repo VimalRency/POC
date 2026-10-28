@@ -13,7 +13,7 @@ int hrLogin(void)
     printf("\n================================");
 
     printf("\nUsername : ");
-    scanf("29%s", username);
+    scanf("%29s", username);
 
     printf("Password : ");
     scanf("%29s", password);
