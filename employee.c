@@ -152,6 +152,7 @@ void updateEmployee(EmployeeNode *head)
     printf("Enter New Salary : ");
     scanf("%f",&emp->emp.salary);
     writeLog("Employee Updated");
+    saveEmployees(head);
 
     printf("Record Updated\n");
 }
