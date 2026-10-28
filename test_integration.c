@@ -28,7 +28,8 @@ void testIntegration(void)
            "21-11-2026");
 
     att.status = 'P';
-
+    EXPECT_EQ(
+        'P',att.status);
     pay.empId = 1000;
 
     pay.basicSalary =
@@ -47,4 +48,5 @@ void testIntegration(void)
     EXPECT_TRUE(
         pay.basicSalary ==
         emp.salary);
+    
 }
